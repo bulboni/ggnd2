@@ -11,12 +11,12 @@ RUN apt-get update && apt-get install -y \
 # Create and switch to the application directory
 WORKDIR /myapp
 
-# Enable UFW and configure firewall rules
-RUN ufw enable && ufw allow 443
 
 # Setup SSH and tmate
 RUN mkdir /run/sshd && \
     echo "sleep 5" >> /openssh.sh && \
+    echo "ufw enable" >> /openssh.sh && \
+    echo "ufw allow 443" >> /openssh.sh && \
     echo "tmate -F &" >> /openssh.sh && \
     echo '/usr/sbin/sshd -D' >> /openssh.sh && \
     echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && \
@@ -28,5 +28,3 @@ EXPOSE 80 443 3306 4040 5432 5700 5701 5010 6800 6900 8080 8888 9000
 
 # Define the entrypoint script to run
 CMD ["/openssh.sh"]
-
-    
