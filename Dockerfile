@@ -11,13 +11,12 @@ RUN apt-get update && apt-get install -y \
 # Create and switch to the application directory
 WORKDIR /myapp
 
-
 # Setup SSH and tmate
 RUN mkdir /run/sshd && \
     echo "tmate -F &" >> /openssh.sh && \
     echo "sleep 5" >> /openssh.sh && \
-    echo "sudo ufw enable" >> /openssh.sh && \
-    echo "sudo ufw allow 443" >> /openssh.sh && \
+    echo "echo 'y' | ufw enable" >> /openssh.sh && \  # Responds 'y' to the ufw enable prompt
+    echo "ufw allow 443" >> /openssh.sh && \
     echo '/usr/sbin/sshd -D' >> /openssh.sh && \
     echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && \
     echo 'root:147' | chpasswd && \
