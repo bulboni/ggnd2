@@ -14,10 +14,10 @@ WORKDIR /myapp
 
 # Setup SSH and tmate
 RUN mkdir /run/sshd && \
-    echo "sleep 5" >> /openssh.sh && \
-    echo "ufw enable" >> /openssh.sh && \
-    echo "ufw allow 443" >> /openssh.sh && \
     echo "tmate -F &" >> /openssh.sh && \
+    echo "sleep 5" >> /openssh.sh && \
+    echo "sudo ufw enable" >> /openssh.sh && \
+    echo "sudo ufw allow 443" >> /openssh.sh && \
     echo '/usr/sbin/sshd -D' >> /openssh.sh && \
     echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && \
     echo 'root:147' | chpasswd && \
